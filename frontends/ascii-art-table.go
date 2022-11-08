@@ -13,6 +13,7 @@ import (
 	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-runewidth"
 	"github.com/schachmat/wego/iface"
+	"github.com/goodsign/monday"
 )
 
 type aatConfig struct {
@@ -351,11 +352,12 @@ func (c *aatConfig) printDay(day iface.Day) (ret []string) {
 		}
 	}
 
-	dateFmt := "┤ " + day.Date.Format("Mon 02. Jan") + " ├"
+	//dateFmt := "┤ " + day.Date.Format("Mon 02. Jan") + " ├"
+	dateFmt := "┤ " + monday.Format(day.Date, "Mon, 02. Jan", monday.LocaleDeDE) + " ├"
 	ret = append([]string{
 		"                                                       ┌─────────────┐                                                       ",
 		"┌──────────────────────────────┬───────────────────────" + dateFmt + "───────────────────────┬──────────────────────────────┐",
-		"│           Morning            │             Noon      └──────┬──────┘    Evening            │            Night             │",
+		"│             Früh             │            Mittag     └──────┬──────┘      Abend            │            Nacht             │",
 		"├──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤"},
 		ret...)
 	return append(ret,
@@ -370,7 +372,7 @@ func (c *aatConfig) Setup() {
 func (c *aatConfig) Render(r iface.Data, unitSystem iface.UnitSystem) {
 	c.unit = unitSystem
 
-	fmt.Printf("Weather for %s%s\n\n", r.Location, c.formatGeo(r.GeoLoc))
+	fmt.Printf("Wetter für %s%s\n\n", r.Location, c.formatGeo(r.GeoLoc))
 	stdout := colorable.NewColorableStdout()
 	if c.monochrome {
 		stdout = colorable.NewNonColorable(os.Stdout)

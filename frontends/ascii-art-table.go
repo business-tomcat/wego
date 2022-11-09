@@ -10,10 +10,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/goodsign/monday"
 	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-runewidth"
 	"github.com/schachmat/wego/iface"
-	"github.com/goodsign/monday"
 )
 
 type aatConfig struct {
@@ -22,7 +22,7 @@ type aatConfig struct {
 	unit       iface.UnitSystem
 }
 
-//TODO: replace s parameter with printf interface?
+// TODO: replace s parameter with printf interface?
 func aatPad(s string, mustLen int) (ret string) {
 	ansiEsc := regexp.MustCompile("\033.*?m")
 	ret = s
@@ -373,7 +373,7 @@ func (c *aatConfig) Setup() {
 func (c *aatConfig) Render(r iface.Data, unitSystem iface.UnitSystem) {
 	c.unit = unitSystem
 
-	fmt.Printf("Wetter für %s%s\n\n", r.Location, c.formatGeo(r.GeoLoc))
+	fmt.Printf("Wetter für %s%s @ %s Uhr\n\n", r.Location, c.formatGeo(r.GeoLoc), monday.Format(r.Current.Time, "15:04", monday.LocaleDeDE))
 	stdout := colorable.NewColorableStdout()
 	if c.monochrome {
 		stdout = colorable.NewNonColorable(os.Stdout)

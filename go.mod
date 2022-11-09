@@ -9,7 +9,7 @@ require (
 )
 
 require (
-	github.com/goodsign/monday v1.0.0 // indirect
+	github.com/goodsign/monday v1.0.0
 	github.com/mattn/go-isatty v0.0.16 // indirect
 	github.com/rivo/uniseg v0.4.2 // indirect
 	golang.org/x/sys v0.1.0 // indirect

@@ -153,7 +153,7 @@ func (c *aatConfig) formatCond(cur []string, cond iface.Cond, current bool) (ret
 			"    .-.      ",
 			"     __)     ",
 			"    (        ",
-			"     `-᾿     ",
+			"     `-´     ",
 			"      •      ",
 		},
 		iface.CodeCloudy: {
@@ -251,7 +251,7 @@ func (c *aatConfig) formatCond(cur []string, cond iface.Cond, current bool) (ret
 			"\033[38;5;226m    \\   /    \033[0m",
 			"\033[38;5;226m     .-.     \033[0m",
 			"\033[38;5;226m  ‒ (   ) ‒  \033[0m",
-			"\033[38;5;226m     `-᾿     \033[0m",
+			"\033[38;5;226m     `-´     \033[0m",
 			"\033[38;5;226m    /   \\    \033[0m",
 		},
 		iface.CodeThunderyHeavyRain: {
@@ -290,6 +290,7 @@ func (c *aatConfig) formatCond(cur []string, cond iface.Cond, current bool) (ret
 	}
 
 	desc := cond.Desc
+	desc = strings.Replace(desc, "Überwiegend", "Meist", -1)
 	if !current {
 		desc = runewidth.Truncate(runewidth.FillRight(desc, 15), 15, "…")
 	}

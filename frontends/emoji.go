@@ -5,10 +5,12 @@ import (
 	"log"
 	"math"
 	"time"
+	"strings"
 
 	colorable "github.com/mattn/go-colorable"
 	runewidth "github.com/mattn/go-runewidth"
 	"github.com/schachmat/wego/iface"
+	"github.com/goodsign/monday"
 )
 
 type emojiConfig struct {
@@ -41,15 +43,15 @@ func (c *emojiConfig) formatTemp(cond iface.Cond) string {
 	_, u := c.unit.Temp(0.0)
 
 	if cond.TempC == nil {
-		return aatPad(fmt.Sprintf("? %s", u), 12)
+		return aatPad(fmt.Sprintf(" ? %s", u), 13)
 	}
 
 	t := *cond.TempC
 	if cond.FeelsLikeC != nil {
 		fl := *cond.FeelsLikeC
-		return aatPad(fmt.Sprintf("%s (%s) %s", color(t), color(fl), u), 12)
+		return aatPad(fmt.Sprintf("%s (%s) %s", color(t), color(fl), u), 13)
 	}
-	return aatPad(fmt.Sprintf("%s %s", color(t), u), 12)
+	return aatPad(fmt.Sprintf("%s %s", color(t), u), 13)
 }
 
 func (c *emojiConfig) formatCond(cur []string, cond iface.Cond, current bool) (ret []string) {
@@ -84,8 +86,9 @@ func (c *emojiConfig) formatCond(cur []string, cond iface.Cond, current bool) (r
 	}
 
 	desc := cond.Desc
+	desc = strings.Replace(desc, "Überwiegend", "Meist", -1)
 	if !current {
-		desc = runewidth.Truncate(runewidth.FillRight(desc, 13), 13, "…")
+		desc = runewidth.Truncate(runewidth.FillRight(desc, 14), 14, "…")
 	}
 
 	ret = append(ret, fmt.Sprintf("%v %v %v", cur[0], "", desc))
@@ -125,15 +128,16 @@ func (c *emojiConfig) printDay(day iface.Day) (ret []string) {
 		}
 	}
 
-	dateFmt := "┤  " + day.Date.Format("Mon") + "  ├"
+	//dateFmt := "┤  " + day.Date.Format("Mon") + "  ├"
+	dateFmt := "┤ " + monday.Format(day.Date, "Mon", monday.LocaleDeDE) + "  ├"
 	ret = append([]string{
-		"                            ┌───────┐ ",
-		"┌───────────────┬───────────" + dateFmt + "───────────┬───────────────┐",
-		"│    Morning    │    Noon   └───┬───┘ Evening   │     Night     │",
-		"├───────────────┼───────────────┼───────────────┼───────────────┤"},
+		"                               ┌─────┐ ",
+		"┌────────────────┬─────────────" + dateFmt + "─────────────┬────────────────┐",
+		"│      Früh      │     Mittag  └──┬──┘   Abend     │     Nacht      │",
+		"├────────────────┼────────────────┼────────────────┼────────────────┤"},
 		ret...)
 	return append(ret,
-		"└───────────────┴───────────────┴───────────────┴───────────────┘",
+		"└────────────────┴────────────────┴────────────────┴────────────────┘",
 		" ")
 }
 

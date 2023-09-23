@@ -19,7 +19,7 @@
 ## Dependencies
 
 * A [working](https://golang.org/doc/install#testing) [Go](https://golang.org/)
-  [1.17](https://golang.org/doc/go1.17) environment 
+  [1.20](https://golang.org/doc/go1.20) environment 
 * utf-8 terminal with 256 colors
 * A monospaced font containing all the required runes (I use `dejavu sans
   mono`)
@@ -33,7 +33,7 @@ Check your distribution for packaging:
 
 To directly install or update the wego binary from Github into your `$GOPATH` as usual, run:
 ```shell
-go get -u github.com/schachmat/wego
+go install github.com/schachmat/wego@latest
 ```
 
 ## Setup
@@ -63,9 +63,7 @@ go get -u github.com/schachmat/wego
    and next few days for your chosen location.
 0. If you're visiting someone in e.g. London over the weekend, just run `wego 4
    London` or `wego London 4` (the ordering of arguments makes no difference) to
-   get the forecast for the current and the next 3 days. Unfortunately that does
-   not currently work with the forecast.io backend, as it only supports
-   latitude,longitude location specification.
+   get the forecast for the current and the next 3 days.
 
 You can set the `$WEGORC` environment variable to override the default config
 file location.

@@ -414,8 +414,10 @@ func (c *openWeatherConfig) Fetch(location string, numdays int) iface.Data {
 	}
 
 	ret.Location = fmt.Sprintf("%s, %s", resp.City.Name, resp.City.Country)
-	ret.Forecast = c.parseDaily(resp.List, numdays)
-	return ret
+	if numdays > 0 {
+		ret.Forecast = c.parseDaily(resp.List, numdays)
+	}
+return ret
 }
 
 func init() {
